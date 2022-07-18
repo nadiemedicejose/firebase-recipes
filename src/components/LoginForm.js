@@ -9,9 +9,23 @@ const LoginForm = ({existingUser}) => {
 		event.preventDefault();
 
 		try {
-			await FirebaseAuthService.registerUser(username, password);
+			await FirebaseAuthService.loginUser(username, password);
 			setUsername('');
 			setPassword('');
+		} catch (error) {
+			alert(error.message);
+		}
+	}
+
+	async function handleSendResetPasswordEmail() {
+		if (!username) {
+			alert('Missing username!');
+			return;
+		}
+
+		try {
+			await FirebaseAuthService.sendPasswordResetEmail(username);
+			alert('Sent the password reset email');
 		} catch (error) {
 			alert(error.message);
 		}
@@ -59,7 +73,13 @@ const LoginForm = ({existingUser}) => {
 						</label>
 
 						<div className="button-box">
-							<button className="primary-button">Submit</button>
+							<button className="primary-button">Login</button>
+							<button
+								type="button"
+								className="primary-button"
+								onClick={handleSendResetPasswordEmail}>
+								Reset Password
+							</button>
 						</div>
 					</form>)
 			}
