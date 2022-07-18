@@ -1,4 +1,9 @@
-import firebase from 'firebase';
+// import firebase from 'firebase';
+
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const config = {
 	apiKey: process.env.REACT_APP_API_KEY,
@@ -9,8 +14,22 @@ const config = {
 	appId: process.env.REACT_APP_ID
 };
 
-if (!firebase.app.length) {
-	firebase.initializeApp(config);
-}
+// Version 8
+// const classicFirebaseApp = firebase.initializeApp(config);
+// const auth = classicFirebaseApp.auth();
+// const firestore = classicFirebaseApp.firestore();
+// const storage = classicFirebaseApp.storage();
 
-export default firebase;
+// Version 9
+const firebaseApp = initializeApp(config);
+const auth = getAuth(firebaseApp);
+const firestore = getFirestore(firebaseApp);
+const storage = getStorage(firebaseApp);
+
+const firebaseConfig = {
+	auth,
+	firestore,
+	storage,
+};
+
+export default firebaseConfig;
