@@ -30,6 +30,11 @@ export const App = () => {
 				<h1 className="title">Firebase Recipes</h1>
 				<LoginForm existingUser={user}/>
 			</div>
+			<div className="main">
+				{
+					user ? (<AddEditRecipeForm handleAddRecipe={handleAddRecipe}/>) : null
+				}
+			</div>
 		</div>
 	);
 };
